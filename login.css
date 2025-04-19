@@ -1,0 +1,152 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* Body chính */
+body {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 10px;
+    color: #5d5d5d;
+    text-align: center;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+/* Nền ảnh */
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/Hod.png'); /* <-- sửa đường dẫn */
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+}
+
+/* Form container */
+.wrapper {
+    position: relative;
+    width: 490px;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid #ffffff80;
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.3); /* Màu nền mờ trong */
+}
+
+/* Form layout */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tiêu đề */
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #6afc10;
+}
+
+/* Nhóm input */
+.input-field {
+    position: relative;
+    border-bottom: 2px solid #ccc;
+    margin: 15px 0;
+}
+
+.input-field label {
+    position: absolute;
+    color: black;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.15s ease;
+}
+
+.input-field input {
+    width: 100%;
+    height: 40px;
+    color: black;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.input-field input:focus ~ label,
+.input-field input:valid ~ label {
+    font-size: 0.8rem;
+    top: 10px;
+    transform: translateY(-120%);
+}
+
+/* Checkbox */
+.forget {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 0 35px 0;
+    color: #5d5d5d;
+}
+
+#remember {
+    accent-color: #fff;
+}
+
+.forget label {
+    display: flex;
+    align-items: center;
+}
+
+.forget label p {
+    margin-left: 8px;
+}
+
+/* Nút đăng ký */
+/* Áp dụng cho cả button và a */
+.btn-course a,
+.btn-course button {
+    text-decoration: none;
+    background: #6afc10;
+    color: #fff;
+    font-weight: 600;
+    padding: 12px 150px;
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+/* Hover cho cả button và a */
+.btn-course a:hover,
+.btn-course button:hover {
+    background: #6afc10;
+    color: #f1eaea;
+    transform: scale(1.03); /* hiệu ứng phóng to nhẹ */
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-course button,
+    .btn-course a {
+        font-size: 0.9rem;
+        padding: 10px 0;
+    }
+}

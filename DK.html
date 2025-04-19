@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng ký khám</title>
+  <link rel="stylesheet" href="CSS/style.css" />
+  <link rel="stylesheet" href="CSS/login.css" />
+  <style>
+    #warning, #success {
+      display: none;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    #warning { color: red; }
+    #success { color: green; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <form id="registerForm" action="#">
+      <h2>Đăng ký</h2>
+      <p id="warning">⚠️ Vui lòng nhập đầy đủ thông tin và tích vào ô xác nhận!</p>
+      <p id="success">
+        Bạn đã đăng ký khám thành công!<br>
+        Chúng tôi sẽ liên hệ với bạn sớm nhất có thể
+      </p>
+
+      <div class="input-field">
+        <input type="text" id="name" required />
+        <label for="name">Tên người cần tư vấn</label>
+      </div>
+
+      <div class="input-field">
+        <input type="text" id="phone" required />
+        <label for="phone">Số điện thoại liên hệ</label>
+      </div>
+
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember" />
+          <span>Xác nhận</span>
+        </label>
+      </div>
+
+      <div class="btn-course">
+        <button type="submit" class="btn-course">Đăng ký khám</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4dVcidLF4b4QSy8c2LWxQFHmIXCNGuHsrmVupWFjcUKmNlrhJljOZepf86NCCFKVk/exec";
+
+    const form             = document.getElementById("registerForm");
+    const nameInput        = document.getElementById("name");
+    const phoneInput       = document.getElementById("phone");
+    const rememberCheckbox = document.getElementById("remember");
+    const warningMsg       = document.getElementById("warning");
+    const successMsg       = document.getElementById("success");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // 1️⃣ Validate
+      if (
+        nameInput.value.trim() === "" ||
+        phoneInput.value.trim() === "" ||
+        !rememberCheckbox.checked
+      ) {
+        warningMsg.style.display = "block";
+        successMsg.style.display = "none";
+        return;
+      }
+
+      warningMsg.style.display = "none";
+
+      // 2️⃣ Gửi dữ liệu
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body:
+          "name="  + encodeURIComponent(nameInput.value)
+        + "&phone=" + encodeURIComponent(phoneInput.value)
+      })
+      .then(response => response.text())
+      .then(text => {
+        if (text === "Success") {
+          successMsg.style.display = "block";
+          form.reset();
+        } else {
+          alert("Server trả về lỗi: " + text);
+        }
+      })
+      .catch(err => {
+        console.error("Lỗi khi gửi request:", err);
+        alert("Không gửi được dữ liệu. Xin thử lại sau.");
+      });
+    });
+  </script>
+</body>
+</html>
